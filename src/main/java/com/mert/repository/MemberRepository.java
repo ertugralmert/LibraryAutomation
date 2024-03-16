@@ -43,14 +43,28 @@ public class MemberRepository implements IMember {
             Member member = memberOptional.get();
             Optional<Book> bookOptional = findBookByName(bookName);
 
-            if (bookOptional.isPresent() || bookOptional.get().getSituation() != Situation.Rentable) {
+            if (bookOptional.isPresent() && bookOptional.get().getSituation() == Situation.Rentable) {
                 Book book = bookOptional.get();
                 book.setSituation(Situation.Rented);
                 member.getRentedBooks().add(book);
+                updateBookStatus(book);
                 return true;
             }
         }
         return false;
+    }
+
+    private void updateBookStatus(Book rentedBook){
+        Stream.of(historyBookList,romanBookList,scienceBookList)
+                .flatMap(Collection::stream)
+                .filter(book -> book.getISBN().equals(rentedBook.getISBN()))
+                .forEach(book -> book.setSituation(Situation.Rented));
+    }
+    private void updatedBooksForReturnBook(Book book,Situation newSituation){
+        Stream.of(historyBookList,romanBookList,scienceBookList)
+                .flatMap(Collection::stream)
+                .filter(x->x.getISBN().equals(book.getISBN()))
+                .forEach(x->x.setSituation(newSituation));
     }
 
     @Override
@@ -66,6 +80,7 @@ public class MemberRepository implements IMember {
             Book book = bookOptional.get();
             book.setSituation(Situation.Rentable);
             member.getRentedBooks().remove(book);
+            updatedBooksForReturnBook(book,Situation.Rentable);
             return true;
         }
     }

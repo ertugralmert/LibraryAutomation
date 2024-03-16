@@ -127,6 +127,7 @@ public GUI(){
                                 1- Kiralama
                                 2- Iade
                                 3- Kiralanan Kitap Listesi
+                                4- Tüm Kitap Listesi
 
                                            
                                 0- Ç I K I Ş""");
@@ -147,8 +148,12 @@ public GUI(){
                             }
                             case 3: {
                                 System.out.println("Kiraladığınız Kitapların Listesi");
-                                library.memberController.listRantedBooks();
+                                System.out.println(library.memberController.listRantedBooks());
                                 break;
+                            }
+                            case 4: {
+                                System.out.println("Tüm Kitap Listesi");
+                                library.printAllBooks();
                             }
 
                             case 0: {
@@ -211,159 +216,36 @@ public GUI(){
     }
 
     private void manageAdminMenu(){
-    boolean work = true;
+    boolean mainRun = true;
 
-            while(work){
+            while(mainRun){
                 subGUILibrary();
                 System.out.print("Seçim: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
                 switch (choice){
-                    case 1 : {
-                        System.out.println("Tarih Kitabı İşlemleri");
-                        while (work) {
-                            bookSout();
-                            System.out.print("Seçim: ");
-                            choice = scanner.nextInt();
-                            switch (choice) {
-                                case 1: {
-                                    System.out.println("Kitap Ekleme");
-                                    library.historyController.addBook();
-                                    break;
-                                }
-                                case 2: {
-                                    System.out.println("Isme göre Arama");
-                                    library.historyController.listByName();
-                                    break;
-                                }
-                                case 3: {
-                                    System.out.println("Yazar ismine göre ara");
-                                    library.historyController.listByAuthor();
-                                    break;
-                                }
-
-                                case 4: {
-                                    System.out.println("ISBN göre arama");
-                                    library.historyController.listByISBN();
-                                    break;
-                                }
-                                case 5: {
-                                    System.out.println("Kitapları Listele");
-                                    library.historyController.listAll();
-                                    break;
-                                }
-                                case 0: {
-                                    System.out.println("Çıkış yapıldı");
-                                    work = false;
-                                    break;
-                                }
-                                default: {
-                                    System.out.println("Geçersiz Seçim");
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    case 2 :
-                    {
-                        System.out.println("Roman Kitabı İşlemleri");
-                        while (work) {
-                            bookSout();
-                            System.out.print("Seçim: ");
-                            choice = scanner.nextInt();
-                            switch (choice) {
-                                case 1: {
-                                    System.out.println("Kitap Ekleme");
-                                    library.romanController.addBook();
-                                    break;
-                                }
-                                case 2: {
-                                    System.out.println("Isme göre Arama");
-                                    library.romanController.listByName();
-                                    break;
-                                }
-                                case 3: {
-                                    System.out.println("Yazar ismine göre ara");
-                                    library.romanController.listByAuthor();
-                                    break;
-                                }
-
-                                case 4: {
-                                    System.out.println("ISBN göre arama");
-                                    library.romanController.listByISBN();
-                                    break;
-                                }
-                                case 5: {
-                                    System.out.println("Kitapları Listele");
-                                    library.romanController.listAll();
-                                    break;
-                                }
-                                case 0: {
-                                    System.out.println("Çıkış yapıldı");
-                                    work = false;
-                                    break;
-                                }
-                                default: {
-                                    System.out.println("Geçersiz Seçim");
-                                    break;
-                                }
-                            }
-                        }
-                    } // case 3
-                    case 3:
-                    {
-                        System.out.println("Bilim Kitabı İşlemleri");
-                        while (work) {
-                            bookSout();
-                            System.out.print("Seçim: ");
-                            choice = scanner.nextInt();
-                            switch (choice) {
-                                case 1: {
-                                    System.out.println("Kitap Ekleme");
-                                    library.scienceController.addBook();
-                                    break;
-                                }
-                                case 2: {
-                                    System.out.println("Isme göre Arama");
-                                    library.scienceController.listByName();
-                                    break;
-                                }
-                                case 3: {
-                                    System.out.println("Yazar ismine göre ara");
-                                    library.scienceController.listByAuthor();
-                                    break;
-                                }
-
-                                case 4: {
-                                    System.out.println("ISBN göre arama");
-                                    library.scienceController.listByISBN();
-                                    break;
-                                }
-                                case 5: {
-                                    System.out.println("Kitapları Listele");
-                                    library.scienceController.listAll();
-                                    break;
-                                }
-                                case 0: {
-                                    System.out.println("Çıkış yapıldı");
-                                    work = false;
-                                    break;
-                                }
-                                default: {
-                                    System.out.println("Geçersiz Seçim");
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                    case 1 : manageHistoryBooks(); break;
+                    case 2 : manageRoman(); break;
+                     // case 3
+                    case 3: manageScienceHistory(); break;
                     case 4 : {
                         System.out.println("Üye Listesi");
                         memberList();
                        break;
                     }
+                    case 5: {
+                        System.out.println("Kiralanan Kitap Listesi");
+                        library.printRentedBooks();
+                        break;
+                    }
+                    case 6: {
+                        System.out.println("Tüm Kitap Listesi");
+                        library.printAllBooks();
+                        break;
+                    }
                     case 0 : {
                         System.out.println("Çıkış yapıldı");
-                        work = false;
+                        mainRun = false;
                         break;
                     }
                     default:
@@ -375,6 +257,153 @@ public GUI(){
 
         }
 
+        private void manageHistoryBooks(){
+    boolean runHistory = true;
+    while (runHistory){
+        bookSout();
+        System.out.print("Seçim: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        switch (choice){
+
+                    case 1: {
+                        System.out.println("Kitap Ekleme");
+                        library.historyController.addBook();
+                        break;
+                    }
+                    case 2: {
+                        System.out.println("Isme göre Arama");
+                        library.historyController.listByName();
+                        break;
+                    }
+                    case 3: {
+                        System.out.println("Yazar ismine göre ara");
+                        library.historyController.listByAuthor();
+                        break;
+                    }
+
+                    case 4: {
+                        System.out.println("ISBN göre arama");
+                        library.historyController.listByISBN();
+                        break;
+                    }
+                    case 5: {
+                        System.out.println("Kitapları Listele");
+                        library.historyController.listAll();
+                        break;
+                    }
+                    case 0: {
+                        System.out.println("Çıkış yapıldı");
+                        runHistory = false;
+                        break;
+                    }
+                    default: {
+                        System.out.println("Geçersiz Seçim");
+                        break;
+                    }
+                    }
+                }
+            }
+
+    private void manageRoman(){
+        boolean runHistory = true;
+        while (runHistory){
+            bookSout();
+            System.out.print("Seçim: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice){
+
+                case 1: {
+                    System.out.println("Kitap Ekleme");
+                    library.romanController.addBook();
+                    break;
+                }
+                case 2: {
+                    System.out.println("Isme göre Arama");
+                    library.romanController.listByName();
+                    break;
+                }
+                case 3: {
+                    System.out.println("Yazar ismine göre ara");
+                    library.romanController.listByAuthor();
+                    break;
+                }
+
+                case 4: {
+                    System.out.println("ISBN göre arama");
+                    library.romanController.listByISBN();
+                    break;
+                }
+                case 5: {
+                    System.out.println("Kitapları Listele");
+                    library.romanController.listAll();
+                    break;
+                }
+                case 0: {
+                    System.out.println("Çıkış yapıldı");
+                    runHistory = false;
+                    break;
+                }
+                default: {
+                    System.out.println("Geçersiz Seçim");
+                    break;
+                }
+            }
+        }
+    }
+
+    private void manageScienceHistory(){
+        boolean runHistory = true;
+        while (runHistory){
+            bookSout();
+            System.out.print("Seçim: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice){
+
+                case 1: {
+                    System.out.println("Kitap Ekleme");
+                    library.scienceController.addBook();
+                    break;
+                }
+                case 2: {
+                    System.out.println("Isme göre Arama");
+                    library.scienceController.listByName();
+                    break;
+                }
+                case 3: {
+                    System.out.println("Yazar ismine göre ara");
+                    library.scienceController.listByAuthor();
+                    break;
+                }
+
+                case 4: {
+                    System.out.println("ISBN göre arama");
+                    library.scienceController.listByISBN();
+                    break;
+                }
+                case 5: {
+                    System.out.println("Kitapları Listele");
+                    library.scienceController.listAll();
+                    break;
+                }
+                case 0: {
+                    System.out.println("Çıkış yapıldı");
+                    runHistory = false;
+                    break;
+                }
+                default: {
+                    System.out.println("Geçersiz Seçim");
+                    break;
+                }
+            }
+        }
+    }
+
+
+
+
 
 
 
@@ -385,6 +414,8 @@ public GUI(){
                     2- Roman Kitabı İşlemleri
                     3- Bilim Kitabı İşlemleri
                     4- Uye Listesi
+                    5- Kiralanan Kitap Listesi
+                    6- Tüm Kitap Listesi
                     
                     0- Çıkış
                 """);

@@ -1,5 +1,7 @@
 package com.mert.entity;
 
+import com.mert.Utility.Database;
+import com.mert.Utility.Situation;
 import com.mert.controller.*;
 import com.mert.entity.books.Book;
 import com.mert.repository.MemberRepository;
@@ -11,7 +13,11 @@ import com.mert.service.book.MemberService;
 import com.mert.service.book.RomanBookService;
 import com.mert.service.book.ScienceBookService;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Library {
 
@@ -145,6 +151,36 @@ public     BookController historyController = new HistoryBookController(new Hist
 
     public boolean loginMember(){
      return   memberController.login();
+    }
+// Ekstra Ekleme
+    public List<Book> rantedBooksAll(){
+        List<Book> rantedBooksList = new ArrayList<>();
+        rantedBooksList.addAll(Database.historyBookList);
+        rantedBooksList.addAll(Database.romanBookList);
+        rantedBooksList.addAll(Database.scienceBookList);
+       return rantedBooksList.stream().filter(x->x.getSituation()== Situation.Rented).collect(Collectors.toList());
+    }
+
+    public  List<Book> allBooks(){
+        List<Book> rantedBooksList = new ArrayList<>();
+        rantedBooksList.addAll(Database.historyBookList);
+        rantedBooksList.addAll(Database.romanBookList);
+        rantedBooksList.addAll(Database.scienceBookList);
+        return rantedBooksList;
+    }
+
+    public void printRentedBooks(){
+        List<Book> rentedBooks = rantedBooksAll();
+        for (Book book : rentedBooks){
+            System.out.println(book.toString());
+        }
+    }
+
+    public void printAllBooks(){
+        List<Book> printAll = allBooks();
+        for (Book book:printAll){
+            System.out.println(book.toString());
+        }
     }
 
 

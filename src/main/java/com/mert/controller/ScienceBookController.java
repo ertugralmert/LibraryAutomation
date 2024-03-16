@@ -4,8 +4,10 @@ import com.mert.Utility.Situation;
 import com.mert.entity.books.HistoryBook;
 import com.mert.entity.books.ScienceBook;
 import com.mert.repository.book.RomanBookRepository;
+import com.mert.repository.book.ScienceBookRepository;
 import com.mert.service.book.BookService;
 import com.mert.service.book.RomanBookService;
+import com.mert.service.book.ScienceBookService;
 
 import java.util.List;
 
@@ -14,7 +16,7 @@ public class ScienceBookController extends BookController {
     private final BookService bookService;
 
     public ScienceBookController (BookService bookService){
-        this.bookService = new RomanBookService(new RomanBookRepository());
+        this.bookService = new ScienceBookService(new ScienceBookRepository());
     }
     @Override
     public void addBook() {
